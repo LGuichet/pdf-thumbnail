@@ -1,52 +1,50 @@
-## About
+# Backend Coding Challenge
 
-This project was created with [express-generator-typescript](https://github.com/seanpmaxwell/express-generator-typescript).
+## Problem Statement
 
+Construct a micro-service that, when given an link to a pdf document:
 
-## Available Scripts
+1. stores the document in local storage and
+2. generates a thumbnail for the document
 
-### `npm run clean-install`
+## Technologies to use
 
-Remove the existing `node_modules/` folder, `package-lock.json`, and reinstall all library modules.
+- Typescript
+- Node
 
+## Requirements
 
-### `npm run dev` or `npm run dev:hot` (hot reloading)
+### Mandatory
 
-Run the server in development mode.<br/>
+- Expose an endpoint where an API consumer can POST a PDF.
+  - The PDF should be specified as a URL in the message body, not a file upload
+  - The endpoint should respond immediately after receiving the link, without waiting for the PDF to be processed
+- Expose an endpoint which returns a list of PDFs and their associated thumbnails (both as URLs).
 
-**IMPORTANT** development mode uses `swc` for performance reasons which DOES NOT check for typescript errors. Run `npm run type-check` to check for type errors. NOTE: you should use your IDE to prevent most type errors.
+### Optional stretch goals
 
+_These are optional, do as many as you can/want_
 
-### `npm test` or `npm run test:hot` (hot reloading)
+- Detect duplicates
+- Push a webhook to notify the API client of the successful processing.
 
-Run all unit-tests.
+## Submission details
 
+- POST  <base_url>/pdfs
+  - minimal validation : type = pdf  -> 422 if invalid
+  - bdd : uuid in table "thumbnail_generation_requests"
+  - starts async processing then returns 201 {id: uuid}
+- Processing
+  - save pdf in file system with naming "id.pdf".
+  - first page extraction, conversion to png scaled to 256x256px
+  - save png in file system with naming "id.png"
+  - insert a end of processing event in the bdd table named "successful_thumbnail_jobs"
+- GET <base_url>/pdfs-thumbnails
+  - sql SELECT * from successfull_thumbnail_jobs
+  - response [{id: uuid, pdf_url: <base_url>/pdfs/:id, thumbnail_url: <base_url>/pdfs/:id/thumbnail}]
+- GET <base_url>/pdfs/:id
+- GET <base_url>/pdfs/:id/thumbnail
 
-### `npm test -- "name of test file" (i.e. users).`
+## Evaluation criteria
 
-Run a single unit-test.
-
-
-### `npm run lint`
-
-Check for linting errors.
-
-
-### `npm run build`
-
-Build the project for production.
-
-
-### `npm start`
-
-Run the production build (Must be built first).
-
-
-### `npm run type-check`
-
-Check for typescript errors.
-
-
-## Additional Notes
-
-- If `npm run dev` gives you issues with bcrypt on MacOS you may need to run: `npm rebuild bcrypt --build-from-source`. 
+You should see this challenge as a way to showcase your software engineering skills in a professional environment.

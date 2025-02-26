@@ -1,14 +1,10 @@
-import logger from 'jet-logger';
 
-import ENV from '@src/common/ENV';
-import server from './server';
+import express, { Request, Response } from "express";
 
+const app = express();
 
-/******************************************************************************
-                                  Run
-******************************************************************************/
+app.get('/', (_: Request, res: Response) => {
+  res.json({ version: process.env.npm_package_version, service: "pdf-thumbnail" })
+});
 
-const SERVER_START_MSG = ('Express server started on port: ' + 
-  ENV.Port.toString());
-
-server.listen(ENV.Port, () => logger.info(SERVER_START_MSG));
+module.exports = app;
