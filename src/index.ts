@@ -1,10 +1,7 @@
+import { app } from "./server";
 
-import express, { Request, Response } from "express";
+const PORT = 3000;
 
-const app = express();
-
-app.get('/', (_: Request, res: Response) => {
-  res.json({ version: process.env.npm_package_version, service: "pdf-thumbnail" })
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
-
-module.exports = app;
