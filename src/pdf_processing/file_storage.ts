@@ -1,6 +1,6 @@
 import { readFile, writeFile } from 'fs/promises';
 
-export async function saveToFileSystem(file: Buffer, fileName: string): Promise<void> {
+export async function saveToFileSystem(file: Buffer | ReadableStream, fileName: string): Promise<void> {
     await writeFile('./uploads/' + fileName, file);
 }
 

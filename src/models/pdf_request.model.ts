@@ -1,5 +1,5 @@
 import { DataTypes, Model } from "sequelize";
-import sequelize from '../db_connection';
+import sequelize from "../sequelize";
 
 export class PdfRequest extends Model {
   declare id: string;
@@ -14,8 +14,8 @@ PdfRequest.init(
     },
   },
   {
-    tableName: 'thumbnail_generation_requests',
+    tableName: "thumbnail_generation_requests",
     timestamps: false,
     sequelize,
-  },
+  }
 );

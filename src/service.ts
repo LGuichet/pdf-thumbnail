@@ -1,13 +1,12 @@
-import {CompletedGenerationJob} from "./models/completed_generation_job.model";
-import {PdfRequest} from "./models/pdf_request.model";
-import { saveToFileSystem } from "./pdf_storage";
+import { CompletedGenerationJob } from "./models/completed_generation_job.model";
+import { PdfRequest } from "./models/pdf_request.model";
+import { startProcessing } from "./pdf_processing/pdf_processor";
 
 export async function savePdfProcessingRequest(
   pdf: Buffer
 ): Promise<PdfRequest> {
-  const request = await PdfRequest.create();
-  const fileName = request.id + ".pdf";
-  saveToFileSystem(pdf, fileName);
+  const request = await PdfRequest.create({fields: "id"});
+  startProcessing(pdf, request.id);
   return request;
 }
 
