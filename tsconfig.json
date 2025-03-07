@@ -1,35 +1,16 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "CommonJS",
-    "lib": ["ES2020"],
+    "sourceMap": true,
+    "outDir": "dist",
     "strict": true,
-    "baseUrl": "./",
-    "esModuleInterop": true,
-    "skipLibCheck": true,                     
-
-    
-    "forceConsistentCasingInFileNames": true,
-    "paths": {
-      "@src/*": ["src/*"]
-    },
-    "useUnknownInCatchVariables": false
-  },
-  "ts-node": {
-    "swc": true,
-    "require": [
-      "tsconfig-paths/register",
-      "./config.ts"
+    "lib": [
+      "esnext"
     ],
-  },
-  "include": [
-    "src/**/*.ts",
-    "spec/**/*.ts",
-    "config.ts",
-    "scripts",
-    "eslint.config.ts"
-  ],
-  "exclude": [
-    "src/public/*"
-  ]
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "target": "esnext",
+    "moduleResolution": "Node",
+    "strictPropertyInitialization": false,
+  }
 }

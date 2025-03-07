@@ -1,14 +1,14 @@
-import logger from 'jet-logger';
+import connection from "./db_connection";
+import { app } from "./server";
 
-import ENV from '@src/common/ENV';
-import server from './server';
+const PORT = 3000;
 
 
-/******************************************************************************
-                                  Run
-******************************************************************************/
+const start = async (): Promise<void> => {
+  const co = await connection.sync();
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+};
 
-const SERVER_START_MSG = ('Express server started on port: ' + 
-  ENV.Port.toString());
-
-server.listen(ENV.Port, () => logger.info(SERVER_START_MSG));
+start();
