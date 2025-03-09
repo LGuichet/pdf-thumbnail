@@ -5,7 +5,8 @@ import { generateAndSaveThumbnail } from "./thumbnail_generation";
 export async function startProcessing(pdf: Buffer, requestId: string) {
   const pdfFileName = requestId + ".pdf";
   await saveToFileSystem(pdf, pdfFileName);
-  const thumbnailFileName = requestId + ".jpg";
-  await generateAndSaveThumbnail(pdf, thumbnailFileName);
+  const thumbnailFileName = requestId + ".png";
+  const thumbnail = await generateAndSaveThumbnail(pdf);
+  await saveToFileSystem(thumbnail, thumbnailFileName);
   await CompletedGenerationJob.create({id: requestId});
 }
