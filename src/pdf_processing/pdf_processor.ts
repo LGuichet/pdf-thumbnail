@@ -1,5 +1,5 @@
 import { CompletedGenerationJob } from "../models/completed_generation_job.model";
-import { saveToFileSystem } from "./file_storage";
+import { saveToFileSystem } from "../adapters/file_storage";
 import { generateAndSaveThumbnail } from "./thumbnail_generation";
 
 export async function startProcessing(pdf: Buffer, requestId: string) {

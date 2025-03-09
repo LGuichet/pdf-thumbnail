@@ -5,7 +5,7 @@ import { startProcessing } from "./pdf_processing/pdf_processor";
 export async function savePdfProcessingRequest(
   pdf: Buffer
 ): Promise<PdfRequest> {
-  const request = await PdfRequest.create({fields: "id"});
+  const request = await PdfRequest.create({ fields: "id" });
   startProcessing(pdf, request.id);
   return request;
 }

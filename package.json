@@ -1,9 +1,9 @@
 {
   "name": "pdf-thumbnail",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=22.0.0"
   },
   "scripts": {
     "start": "set NODE_ENV=production & tsx ./src/index.ts",

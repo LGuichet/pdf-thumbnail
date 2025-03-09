@@ -2,17 +2,14 @@ import express, { NextFunction, Request, Response } from "express";
 import multer from "multer";
 import { errorHandler } from "./Middleware/error_handler";
 import { NO_FILE_ERROR, pdfFilter, storage } from "./Middleware/upload_config";
-import { savePdfProcessingRequest } from "./service";
+import { savePdfProcessingRequest } from "../service";
+import { appInfo, pdfRequestId } from "./views";
 
 const app = express();
 app.use(express.json());
 
-
 app.get("/", (_: Request, res: Response) => {
-  res.json({
-    version: process.env.npm_package_version,
-    service: "pdf-thumbnail",
-  });
+  res.json(appInfo());
 });
 
 app.post(
@@ -24,7 +21,7 @@ app.post(
       return next(new Error(NO_FILE_ERROR));
     }
     const request = await savePdfProcessingRequest(pdf.buffer);
-    res.json({ id: request.id });
+    res.json(pdfRequestId(request));
   }
 );
 

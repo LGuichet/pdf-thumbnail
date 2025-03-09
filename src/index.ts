@@ -1,5 +1,5 @@
-import sequelize from "./sequelize";
-import { app } from "./server";
+import sequelize from "./adapters/sequelize";
+import { app } from "./web/server";
 
 const PORT = 3000;
 
