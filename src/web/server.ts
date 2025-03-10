@@ -1,9 +1,12 @@
 import express, { NextFunction, Request, Response } from "express";
 import multer from "multer";
+import {
+  getAllCompletedGenerationJob,
+  savePdfProcessingRequest,
+} from "../service";
 import { errorHandler } from "./Middleware/error_handler";
 import { NO_FILE_ERROR, pdfFilter, storage } from "./Middleware/upload_config";
-import { savePdfProcessingRequest } from "../service";
-import { appInfo, pdfRequestId } from "./views";
+import { appInfo, completedJobsWithLinks, pdfRequestId } from "./views";
 
 const app = express();
 app.use(express.json());
@@ -11,6 +14,20 @@ app.use(express.json());
 app.get("/", (_: Request, res: Response) => {
   res.json(appInfo());
 });
+
+app.get("/pdfs-thumbnails", async (_: Request, res: Response) => {
+  const result = await getAllCompletedGenerationJob();
+  res.json(completedJobsWithLinks(result));
+});
+
+app.get("/pdfs/:id", (req, res) =>
+  res.download("./file_storage/" + req.params.id + ".pdf")
+);
+
+app.get("/pdfs/:id/thumbnail", (req, res) =>
+  res.download("./file_storage/" + req.params.id + ".png")
+);
+
 
 app.post(
   "/pdfs",
